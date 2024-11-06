@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Todo List</h1>
+
+        <form action="/add" method="POST" class="add-form">
+            <input type="text" name="title" placeholder="Add a new task..." required>
+            <button type="submit">Add</button>
+        </form>
+
+        <ul class="todo-list">
+            {{range .}}
+            <li class="todo-item {{if eq .Status "Completed"}}completed{{end}}">
+                <form action="/edit" method="POST" class="todo-form">
+                    <input type="hidden" name="id" value="{{.ID}}">
+
+                    <!-- Checkbox for marking completed tasks -->
+                    <input type="checkbox" name="status" value="Completed" {{if eq .Status "Completed"}}checked{{end}} onchange="this.form.submit()">
+                    
+                    <!-- Task title input (editable only if not completed) -->
+                    <input type="text" name="title" value="{{.Title}}" {{if eq .Status "Completed"}}readonly{{end}} oninput="debouncedSave(this)">
+                </form>
+                <a href="/delete?id={{.ID}}" class="delete-button" onclick="return confirm('Are you sure?')">Delete</a>
+            </li>
+            {{end}}
+        </ul>
+    </div>
+
+    <script src="/static/scripts.js"></script>
+</body>
+</html>
+
