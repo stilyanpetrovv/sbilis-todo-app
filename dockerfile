@@ -1,37 +1,40 @@
-# First stage: Build the Go app
-FROM golang:1.20-bullseye as builder
+# Start with an Ubuntu base image
+FROM ubuntu:22.04
 
-# Set necessary environment variables
-ENV CGO_ENABLED=1 GOOS=linux GOARCH=amd64
+# Set environment variables
+ENV GO_VERSION=1.23.3
+ENV CGO_ENABLED=1
+ENV GOOS=linux
+ENV GOARCH=amd64
 
-# Install SQLite development libraries
-RUN apt-get update && apt-get install -y gcc libc-dev sqlite3 libsqlite3-dev && rm -rf /var/lib/apt/lists/*
+# Install dependencies, including Go and SQLite development libraries
+RUN apt-get update && apt-get install -y \
+    wget \
+    build-essential \
+    libsqlite3-dev \
+    && rm -rf /var/lib/apt/lists/*
 
-# Set the working directory for the application
+# Download and install Go
+RUN wget https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz && \
+    tar -C /usr/local -xzf go${GO_VERSION}.linux-amd64.tar.gz && \
+    rm go${GO_VERSION}.linux-amd64.tar.gz
+
+# Set Go path variables
+ENV PATH="/usr/local/go/bin:${PATH}"
+
+# Create a working directory for the app
 WORKDIR /app
 
-# Copy the application source code and other necessary files
+# Copy the application source code into the container
 COPY . .
 
-# Download dependencies and build the application
-RUN go mod tidy && go build -o todo-app
+# Tidy and build the application with CGO enabled
+RUN go mod tidy
+RUN go build -o todo-app .
 
-# Second stage: Create a lightweight image with only the necessary runtime components
-FROM gcr.io/distroless/base-debian10
-
-# Set the working directory in the final container
-WORKDIR /app
-
-# Copy the compiled binary from the builder stage
-COPY --from=builder /app/todo-app /app/todo-app
-
-# Copy the templates and static assets
-COPY --from=builder /app/templates /app/templates
-COPY --from=builder /app/static /app/static
-
-# Expose the application port
+# Expose the app port
 EXPOSE 8080
 
 # Run the application
-CMD ["/app/todo-app"]
+CMD ["./todo-app"]
 
