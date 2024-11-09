@@ -1,0 +1,48 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    steps:
+    # Step 1: Checkout the code
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # Step 2: Set up Go environment
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: '1.23.3'
+
+    # Step 3: Install dependencies
+    - name: Install dependencies
+      run: go mod tidy
+
+    # Step 4: Build the Go application
+    - name: Build the application
+      run: go build -o sbilis-todo-app ./main.go
+
+    # Step 5: Build Docker image
+    - name: Build Docker image
+      run: docker build -t sbilis-todo-app .
+
+    # Step 6: Run the Docker container for testing
+    - name: Run Docker container
+      run: |
+        docker run -d --name sbilis-todo-app -p 8080:8080 sbilis-todo-app
+        sleep 5 # Give the container time to start
+        curl -f http://localhost:8080 || (docker logs sbilis-todo-app && exit 1)
+    
+    # Step 7: Clean up Docker container
+    - name: Clean up
+      run: docker rm -f sbilis-todo-app
+
