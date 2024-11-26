@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
+    <h1>Welcome, {{.Username}}</h1>
     <div class="container">
         <h1>Todo List</h1>
 
@@ -16,24 +17,26 @@
         </form>
 
         <ul class="todo-list">
-            {{range .}}
+            {{range .Todos}}
             <li class="todo-item {{if eq .Status "Completed"}}completed{{end}}">
                 <form action="/edit" method="POST" class="todo-form">
                     <input type="hidden" name="id" value="{{.ID}}">
 
                     <!-- Checkbox for marking completed tasks -->
                     <input type="checkbox" name="status" value="Completed" {{if eq .Status "Completed"}}checked{{end}} onchange="this.form.submit()">
+
                     
                     <!-- Task title input (editable only if not completed) -->
                     <input type="text" name="title" value="{{.Title}}" {{if eq .Status "Completed"}}readonly{{end}} oninput="debouncedSave(this)">
+
                 </form>
                 <a href="/delete?id={{.ID}}" class="delete-button" onclick="return confirm('Are you sure?')">Delete</a>
             </li>
             {{end}}
         </ul>
     </div>
+    <a href="/logout" class="logout-button">Logout</a>
 
     <script src="/static/scripts.js"></script>
 </body>
 </html>
-

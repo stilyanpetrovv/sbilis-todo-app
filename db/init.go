@@ -3,6 +3,7 @@ package db
 
 import (
 	"database/sql"
+	"fmt"
 
 	_ "github.com/mattn/go-sqlite3"
 )
@@ -17,11 +18,27 @@ func Initialize() error {
 		return err
 	}
 
-	createTableQuery := `CREATE TABLE IF NOT EXISTS todos (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        title TEXT,
-        status TEXT
-    )`
+	// Create the users table if it doesn't exist
+	createUsersTable := `
+	CREATE TABLE IF NOT EXISTS users (
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		username TEXT UNIQUE,
+		password TEXT
+	);`
+
+	_, err = DB.Exec(createUsersTable)
+	if err != nil {
+		return fmt.Errorf("failed to create users table: %v", err)
+	}
+
+	createTableQuery := `
+		CREATE TABLE IF NOT EXISTS todos (
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		user_id INTEGER,
+		title TEXT,
+		status BOOLEAN DEFAULT 0,
+		FOREIGN KEY (user_id) REFERENCES users(id)
+	);`
 
 	if _, err = DB.Exec(createTableQuery); err != nil {
 		return err
