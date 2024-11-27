@@ -56,6 +56,7 @@ h1 {
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .add-form button:hover {
@@ -121,15 +122,16 @@ h1 {
 
 /* Delete button styling */
 .delete-button {
-    padding: 6px 10px;
-    font-size: 0.9em;
+    padding: 10px 15px;
+    font-size: 1em;
     color: white;
     background-color: #ff4d4d;
+    text-decoration: none;
     border: none;
     border-radius: 4px;
-    text-decoration: none;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    transition: background-color 0.3s;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .delete-button:hover {
@@ -143,29 +145,105 @@ h1 {
 }
 
 .logout-button {
-    display: inline-block;
-    background-color: #ff4d4d; /* Reddish color */
-    color: white;
-    border: none;
-    text-decoration: none;
     padding: 10px 15px;
-    border-radius: 5px;
-    font-weight: bold;
-    font-size: 14px;
+    font-size: 1em;
+    color: white;
+    background-color: #ff4d4d;
+    text-decoration: none;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: inline-block;
+    padding: 10px 15px;
     position: absolute;
     top: 10px; /* Adjust vertical position */
     right: 10px; /* Adjust horizontal position */
-    transition: background-color 0.3s ease, transform 0.2s ease;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
-    cursor: pointer;
 }
 
 .logout-button:hover {
     background-color: #ff1a1a; /* Darker red on hover */
-    transform: scale(1.05); /* Slight zoom-in effect */
+    transform: scale(1.03); /* Slight zoom-in effect */
 }
 
 .logout-button:active {
     background-color: #e60000; /* Even darker red when clicked */
     transform: scale(1.02); /* Slight shrink when clicked */
+}
+
+/* General Reset */
+body, html {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+/* Home Container Styling */
+.home-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; /* Align items to the top */
+    padding-top: 20vh; /* Add some spacing from the top */
+    height: 100vh;
+    text-align: center;
+    background: linear-gradient(135deg, #d3ebff, #eef2f3); /* Soft gray and light gradient */
+}
+
+
+
+/* Title Styling */
+.home-title {
+    font-size: 2.5rem;
+    color: #097cff;
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Button Container */
+.button-container {
+    display: flex;
+    gap: 20px;
+}
+
+/* Button Styling */
+.login-button, .register-button {
+    padding: 12px 24px;
+    font-size: 1rem;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.login-button {
+    background-color: #4CAF50; /* Green */
+    color: white;
+}
+
+.register-button {
+    background-color: #007BFF; /* Blue */
+    color: white;
+}
+
+.login-button:hover {
+    background-color: #45a049;
+    transform: translateY(-3px);
+}
+
+.register-button:hover {
+    background-color: #0056b3;
+    transform: translateY(-3px);
+}
+
+/* Add hover effect for both buttons */
+.login-button:active, .register-button:active {
+    transform: scale(0.98);
 }
