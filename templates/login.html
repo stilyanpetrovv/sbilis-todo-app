@@ -6,18 +6,27 @@
     <title>Login</title>
     <link rel="stylesheet" type="text/css" href="/static/styles.css">
 </head>
+
 <body>
-    <form onsubmit="handleLogin(event)">    
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required><br>
-        <span id="usernameError" class="error"></span><br>
+    <div class="home-container">
+        <h1 class="home-title">Login</h1>
+        <form onsubmit="handleLogin(event)">    
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required><br>
+            <span id="usernameError" class="error"></span><br>
 
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required><br>
-        <span id="passwordError" class="error"></span><br>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required><br>
+            <span id="passwordError" class="error"></span><br>
+            <div class="button-container">
 
-        <button type="submit">Login</button>
-    </form>
+                <button type="submit" class="login-button">Login</button>
+                <span>or</span>
+                <a href="/register" class="register-button">Register</a>
+            </div>
+        </form>
+    </div>
+
 
     <script src="/static/scripts.js"></script>
 </body>

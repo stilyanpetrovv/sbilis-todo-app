@@ -1,31 +1,34 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
-    <style>
-        .error {
-            color: red;
-            font-size: 0.9em;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="/static/styles.css">
 </head>
 <body>
-    <form onsubmit="handleRegister(event)">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required><br>
-        <span id="usernameError" class="error"></span><br>
+    <div class="home-container">
+        <h1 class="home-title">Register</h1>
+        <form onsubmit="handleRegister(event)">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required><br>
+            <span id="usernameError" class="error"></span><br>
 
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required><br>
-        <span id="passwordError" class="error"></span><br>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required><br>
+            <span id="passwordError" class="error"></span><br>
 
-        <label for="confirmPassword">Confirm Password:</label>
-        <input type="password" id="confirmPassword" name="confirmPassword" required><br>
-        <span id="confirmPasswordError" class="error"></span><br>
-    
-        <button type="submit">Register</button>
-    </form>
+            <label for="confirmPassword">Confirm Password:</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" required><br>
+            <span id="confirmPasswordError" class="error"></span><br>
+            
+            <div class="button-container">
+                <button type="submit" class="register-button">Register</button>
+                <span>or</span>
+                <a href="/login" class="login-button">Login</a>
+            </div>
+        </form>
+    </div>
 
     <script src="/static/scripts.js"></script>
 </body>
